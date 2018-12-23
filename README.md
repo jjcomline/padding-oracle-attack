@@ -1,5 +1,21 @@
 # PaddingOracleAttack
 
+The idea is to implement the Padding Oracle Attack against the Oracle implemented in the file oracle.py.
+So, we must implement an "attack" function that, given an encrypted message (as a byte-string), recovers the original cleartext message.
+
+## Getting Started
+
+To download my repo:
+
+```
+git clone https://github.com/jjcomline/padding_oracle_attack
+```
+Now you just run the attack.py with the text you want (you can modify it in the test_the_attack() function) and see that is working.
+If you want you can erase the attack() function and implement it by yourself. This is what I've done and the main goal of this short script: learn how this attack works and implement it.
+
+
+## Oracle.py details
+
 Your task is to implement an oracle-padding attack, as discussed during lecture and described in the included paper, against the given Oracle implemented by oracle.py.
 
 You can freely study oracle.py, but your solution must import only three names from our module, namely:
