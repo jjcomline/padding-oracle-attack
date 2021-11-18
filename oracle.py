@@ -21,7 +21,7 @@ def _remove_padding(data):
     if pad_len < 1 or pad_len > BLOCK_SIZE:
         return None
     for i in range(1, pad_len):
-        if data[-i-1] != pad_len:
+        if data[-i - 1] != pad_len:
             return None
     return data[:-pad_len]
 
@@ -42,12 +42,10 @@ def is_padding_ok(data):
     return _decrypt(data) is not None
 
 
-if __name__ == '__main__':
-    cleartext = b'Attack at dawn'
+if __name__ == "__main__":
+    cleartext = b"Attack at dawn"
     ciphertext = encrypt(cleartext)
 
     print("cleartext:", cleartext)
     print("decrypted message:", _decrypt(ciphertext))
     print("padding is ok:", is_padding_ok(ciphertext))
-
-
