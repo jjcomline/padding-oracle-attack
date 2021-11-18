@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-from oracle import encrypt, is_padding_ok, BLOCK_SIZE
+from oracle import encrypt, is_padding_ok, BLOCK_SIZE, _remove_padding
 
 
 def attack_message(msg):
-
     cipherfake = [0] * 16
     plaintext = [0] * 16
     current = 0
-    message = ""
+    message = b""
 
     # I devide the list of bytes in blocks, and I put them in another list
     number_of_blocks = int(len(msg) / BLOCK_SIZE)
@@ -29,16 +28,14 @@ def attack_message(msg):
                 cipherfake[-w] = plaintext[-w] ^ itera + 1 ^ blocks[z][-w]  # for decode the second byte I must set the previous bytes with 'itera+1'
 
         for i in range(16):
-            if plaintext[i] >= 32:
-                char = chr(int(plaintext[i]))
-                message += char
+            char = plaintext[i].to_bytes(1, byteorder='big')
+            message += char
 
-    # print("Crack: " + message + "\n")
-    return str.encode(message)
+    # print("Crack: ", message)
+    return _remove_padding(message)
 
 
 def test_the_attack():
-
     messages = [
         b"Attack at dawn",
         b"",
@@ -51,7 +48,7 @@ def test_the_attack():
     for msg in messages:
         print("Testing:", msg)
         cracked_ct = attack_message(encrypt(msg))
-        assert cracked_ct == msg
+        assert cracked_ct == msg, (cracked_ct, msg)
 
 
 if __name__ == "__main__":
